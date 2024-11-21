@@ -16,7 +16,7 @@ output_folder = "mtg_images"
 os.makedirs(output_folder, exist_ok=True)
 
 for card_name in card_names:
-    print(Fore.BLACK + Back.WHITE +"--------------------------" + Style.RESET_ALL)
+    print(Back.WHITE +"--------------------------" + Style.RESET_ALL)
     print(f"Processing {card_name}...")
 
 
@@ -31,12 +31,12 @@ for card_name in card_names:
         # Locate the image URL
         image_tag = soup.find("img", alt=card_name)
         if not image_tag:
-            print(Fore.YELLOW + f"Image tag not found for {card_name}."+ Style.RESET_ALL)
+            print(Fore.RED + f"Image tag not found for {card_name}."+ Style.RESET_ALL)
             continue
 
         image_url = image_tag.get("src")
         if not image_url:
-            print(Fore.YELLOW + f"Image URL not found for {card_name}." + Style.RESET_ALL)
+            print(Fore.RED + f"Image URL not found for {card_name}." + Style.RESET_ALL)
             continue
 
         # Fix malformed URLs
