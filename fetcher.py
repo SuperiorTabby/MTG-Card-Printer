@@ -7,6 +7,9 @@ from colorama import Fore, Back, Style, init
 # Initialize colorma
 init()
 
+SuccessfulCardCount = 0
+FailedCardCount = 0
+
 # Load card names from cards.txt
 with open("cards.txt", "r") as file:
     # Remove leading numbers and spaces from each line
@@ -16,7 +19,7 @@ output_folder = "mtg_images"
 os.makedirs(output_folder, exist_ok=True)
 
 for card_name in card_names:
-    print(Back.WHITE +"--------------------------" + Style.RESET_ALL)
+    print(Fore.BLACK + Back.WHITE +"--------------------------" + Style.RESET_ALL)
     print(f"Processing {card_name}...")
 
 
@@ -31,12 +34,13 @@ for card_name in card_names:
         # Locate the image URL
         image_tag = soup.find("img", alt=card_name)
         if not image_tag:
-            print(Fore.RED + f"Image tag not found for {card_name}."+ Style.RESET_ALL)
+            print(Fore.YELLOW + f"Image tag not found for {card_name}."+ Style.RESET_ALL)
+            FailedCardCount += 1
             continue
 
         image_url = image_tag.get("src")
         if not image_url:
-            print(Fore.RED + f"Image URL not found for {card_name}." + Style.RESET_ALL)
+            print(Fore.YELLOW + f"Image URL not found for {card_name}." + Style.RESET_ALL)
             continue
 
         # Fix malformed URLs
@@ -60,7 +64,9 @@ for card_name in card_names:
                 img_file.write(chunk)
 
         print(Fore.GREEN + f"Successfully downloaded {card_name}." + Style.RESET_ALL)
+        SuccessfulCardCount += 1
 
         
     except Exception as e:
         print(Fore.RED + f"An error occurred with {card_name}: {e}"+ Style.RESET_ALL)
+        

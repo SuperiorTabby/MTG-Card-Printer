@@ -3,6 +3,7 @@ from docx import Document
 from docx.shared import Inches
 from colorama import Fore, Style, init
 from docx.enum.text import WD_ALIGN_PARAGRAPH
+from fetcher import SuccessfulCardCount, FailedCardCount
 
 
 # Initialize colorma
@@ -50,6 +51,14 @@ if __name__ == "__main__":
     # Get the folder containing images from the user
     image_folder = 'mtg_images'
     
+    #Print card count
+    print("Succsefully downloaded ",SuccessfulCardCount," images.")
+    if FailedCardCount == 1:
+        print("Failed to download ",FailedCardCount, " image.")
+
+    else:
+        print("Failed to download ",FailedCardCount, " images.")
+
     # Prompt for the output file name
     output_file = input("Enter the name for the output .docx file: ") + '.docx'
     
